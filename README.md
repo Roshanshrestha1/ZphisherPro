@@ -45,7 +45,7 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 ##
 
 ## Dashboard Preview
-![Zphisher Pro Dashboard](images/dashboard.png)
+![Zphisher Pro Dashboard](image.png)
 
 ### Features
 
@@ -216,3 +216,4 @@ $ zphisher
 <table>
 
 <!-- // -->
+
