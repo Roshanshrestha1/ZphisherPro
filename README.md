@@ -64,7 +64,7 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 
 - Just, Clone this repository -
   ```
-  git clone git@github.com:Roshanshrestha1/ZphisherPro.git
+  git clone https://github.com/Roshanshrestha1/ZphisherPro.git
   ```
 
 - Now go to cloned directory and run `zphisher.sh` -
@@ -216,5 +216,6 @@ $ zphisher
 <table>
 
 <!-- // -->
+
 
 
