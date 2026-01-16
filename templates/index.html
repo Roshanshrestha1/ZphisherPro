@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zphisher Pro</title>
+    <link rel="icon" type="image/png" href="/images/logo.png">
+
+    <!-- Meta Tags -->
+    <meta property="og:title" content="Zphisher Pro">
+    <meta property="og:description" content="Advanced Automated Phishing Tool with Web UI">
+    <meta property="og:image" content="/images/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Base Theme */
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-pink: #bc13fe;
+            --neon-green: #0aff0a;
+            --glass-bg: rgba(13, 17, 23, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #030407;
+            color: #ecf0f1;
+            overflow: hidden;
+        }
+
+        .font-cyber {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Background Animation */
+        .bg-grid {
+            background-image: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(40px) translateX(40px);
+            }
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(20, 30, 48, 0.6), rgba(36, 59, 85, 0.4));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Neon Glows */
+        .glow-text-blue {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
+        }
+
+        .glow-text-pink {
+            text-shadow: 0 0 10px rgba(188, 19, 254, 0.7);
+        }
+
+        .glow-box {
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0b1121;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-blue);
+        }
+
+        /* Animations */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 243, 255, 0.5);
+            animation: scan 3s linear infinite;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% {
+                top: -10%;
+            }
+
+            100% {
+                top: 110%;
+            }
+        }
+
+        .animate-pulse-fast {
+            animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Custom 3D Switch from User */
+        .switch-container {
+            /* display: flex; align-items: center; justify-content: center; */
+            --hue: 220deg;
+            --width: 60px;
+            /* Scaled down from 15rem */
+            --accent-hue: 190deg;
+            /* Blue/Cyan */
+            --duration: 0.2s;
+            --easing: cubic-bezier(1, 0, 1, 1);
+        }
+
+        .togglesw {
+            display: none;
+        }
+
+        .switch-custom {
+            --shadow-offset: calc(var(--width) / 20);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: var(--width);
+            height: calc(var(--width) / 2.5);
+            border-radius: var(--width);
+            box-shadow: inset 2px 2px 2px hsl(var(--hue) 20% 80%),
+                inset -2px -2px 2px hsl(var(--hue) 20% 93%);
+        }
+
+        .indicator {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 60%;
+            transition: all var(--duration) var(--easing);
+            box-shadow: inset 0 0 2px hsl(var(--hue) 20% 15% / 60%),
+                inset 0 0 3px 2px hsl(var(--hue) 20% 15% / 60%),
+                inset 0 0 5px 2px hsl(var(--hue) 20% 45% / 60%);
+        }
+
+        .indicator.left {
+            --hue: var(--accent-hue);
+            overflow: hidden;
+            left: 10%;
+            border-radius: 100px 0 0 100px;
+            background: linear-gradient(180deg, hsl(calc(var(--accent-hue) + 20deg) 95% 80%) 10%, hsl(calc(var(--accent-hue) + 20deg) 100% 60%) 30%, hsl(var(--accent-hue) 90% 50%) 60%, hsl(var(--accent-hue) 90% 60%) 75%, hsl(var(--accent-hue) 90% 50%));
+        }
+
+        .indicator.left::after {
+            content: '';
+            position: absolute;
+            opacity: 0.6;
+            width: 100%;
+            height: 100%;
+        }
+
+        .indicator.right {
+            right: 10%;
+            border-radius: 0 100px 100px 0;
+            background-image: linear-gradient(180deg, hsl(var(--hue) 20% 95%), hsl(var(--hue) 20% 65%) 60%, hsl(var(--hue) 20% 70%) 70%, hsl(var(--hue) 20% 65%));
+        }
+
+        .button-switch {
+            position: absolute;
+            z-index: 1;
+            width: 55%;
+            height: 80%;
+            left: 5%;
+            border-radius: 100px;
+            background-image: linear-gradient(160deg, hsl(var(--hue) 20% 95%) 40%, hsl(var(--hue) 20% 65%) 70%);
+            transition: all var(--duration) var(--easing);
+            box-shadow: 1px 1px 2px hsl(var(--hue) 18% 50% / 80%),
+                1px 1px 3px hsl(var(--hue) 18% 50% / 40%),
+                2px 4px 2px hsl(var(--hue) 18% 50% / 40%),
+                4px 6px 6px hsl(var(--hue) 18% 50% / 60%);
+        }
+
+        .button-switch::before,
+        .button-switch::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            width: 41%;
+            height: 80%;
+            border-radius: 100%;
+        }
+
+        .button-switch::before {
+            left: 5%;
+            box-shadow: inset 1px 1px 2px hsl(var(--hue) 20% 85%);
+            background-image: linear-gradient(-50deg, hsl(var(--hue) 20% 95%) 20%, hsl(var(--hue) 20% 85%) 80%);
+        }
+
+        .button-switch::after {
+            right: 5%;
+            box-shadow: inset 1px 1px 3px hsl(var(--hue) 20% 70%);
+            background-image: linear-gradient(-50deg, hsl(var(--hue) 20% 95%) 20%, hsl(var(--hue) 20% 75%) 80%);
+        }
+
+        .togglesw:checked~.button-switch {
+            left: 40%;
+        }
+
+        .togglesw:not(:checked)~.indicator.left,
+        .togglesw:checked~.indicator.right {
+            box-shadow: inset 0 0 5px hsl(var(--hue) 20% 15% / 100%),
+                inset 20px 20px 10px hsl(var(--hue) 20% 15% / 100%),
+                inset 20px 20px 15px hsl(var(--hue) 20% 45% / 100%);
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col relative">
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg" class="absolute inset-0 z-0 opacity-20"></canvas>
+    <div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-black/60 to-black/90 pointer-events-none">
+    </div>
+    <div class="scan-line z-0 pointer-events-none"></div>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const alphabet = katakana + latin + nums;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0'; // Neon Green
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 30);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+
+    <!-- Top Bar -->
+    <header
+        class="relative z-20 h-16 flex items-center justify-between px-6 border-b border-indigo-500/20 bg-slate-900/40 backdrop-blur-md">
+        <div class="flex items-center gap-4">
+            <div class="relative h-12 w-12 flex items-center justify-center">
+                <div class="absolute inset-0 bg-cyan-500/20 blur-xl rounded-full"></div>
+                <img src="/images/logo.png" alt="Zphisher Pro"
+                    class="relative h-full w-full object-contain drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]">
+            </div>
+            <h1 class="text-3xl font-cyber font-bold tracking-wider italic">
+                <span class="text-white">Z</span><span class="text-cyan-400 glow-text-blue">PHISHER</span>
+                <span
+                    class="text-xs bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30 ml-2 not-italic align-middle">PRO</span>
+            </h1>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div id="status-badge"
+                class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/60 border border-slate-600/50 backdrop-blur-sm transition-all duration-300">
+                <div id="status-dot" class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.6)]">
+                </div>
+                <span id="status-text" class="text-sm font-semibold tracking-wide text-slate-300">SYSTEM IDLE</span>
+            </div>
+
+            <!-- Stats Counters (Clickable) -->
+            <button onclick="openDataModal()"
+                class="flex items-center gap-3 px-3 py-1.5 rounded bg-slate-900/60 border border-emerald-500/30 hover:bg-slate-800 transition-colors group cursor-pointer">
+                <div class="flex items-center gap-2">
+                    <span
+                        class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest group-hover:text-emerald-300">CREDS</span>
+                    <span id="creds-count" class="text-sm font-mono text-white group-hover:text-cyan-300">0</span>
+                </div>
+                <div class="w-px h-4 bg-slate-700"></div>
+                <div class="flex items-center gap-2">
+                    <span
+                        class="text-[10px] font-bold text-yellow-400 uppercase tracking-widest group-hover:text-yellow-300">VICTIMS</span>
+                    <span id="victims-count" class="text-sm font-mono text-white group-hover:text-cyan-300">0</span>
+                </div>
+            </button>
+
+            <button onclick="toggleSettings()"
+                class="group p-2 rounded-lg hover:bg-white/5 transition-colors border border-transparent hover:border-white/10">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-slate-400 group-hover:text-cyan-400 transition-colors" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="relative z-10 flex-1 flex p-6 gap-6 overflow-hidden">
+
+        <!-- Sidebar: Config -->
+        <div class="w-80 flex flex-col gap-6 shrink-0 slide-in-left overflow-y-auto h-full pr-2 no-scrollbar">
+            <!-- Target Selection -->
+            <div class="glass-panel p-1 rounded-2xl flex flex-col gap-0 overflow-hidden">
+                <div class="bg-indigo-900/30 p-4 border-b border-white/5">
+                    <h2
+                        class="text-indigo-300 font-cyber font-bold text-sm tracking-wider uppercase flex items-center gap-2">
+                        <span class="w-1 h-4 bg-indigo-500 rounded-full"></span> Target Protocol
+                    </h2>
+                </div>
+                <div class="p-5 flex flex-col gap-4">
+                    <div class="relative">
+                        <label
+                            class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block pl-1">SERVICE</label>
+                        <select id="service-select" onchange="updateTemplates()"
+                            class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 block p-3 appearance-none uppercase font-bold tracking-wider cursor-pointer hover:bg-slate-800 transition-colors">
+                            <option value="" disabled selected>SELECT SERVICE...</option>
+                        </select>
+                        <div class="absolute bottom-4 right-0 flex items-center px-2 pointer-events-none">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="relative hidden" id="template-container">
+                        <label
+                            class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 block pl-1">TEMPLATE</label>
+                        <select id="template-select"
+                            class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 block p-3 appearance-none uppercase font-bold tracking-wider cursor-pointer hover:bg-slate-800 transition-colors">
+                            <!-- Populated dynamically -->
+                        </select>
+                        <div class="absolute bottom-4 right-0 flex items-center px-2 pointer-events-none">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Cloudflared Switch -->
+                    <!-- New Custom 3D Switch -->
+                    <div
+                        class="flex items-center justify-between group p-3 rounded-lg border border-slate-700/50 bg-slate-800/40 hover:border-cyan-500/50 transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 rounded bg-orange-500/10 text-orange-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-sm font-bold text-slate-200 group-hover:text-cyan-300 transition-colors">Cloudflared</span>
+                                <span class="text-[10px] text-slate-500">Secure Tunneling</span>
+                            </div>
+                        </div>
+
+                        <div class="switch-container">
+                            <label class="switch-custom">
+                                <input class="togglesw" type="checkbox" id="use-cloudflared"
+                                    onchange="updateCldStatus()">
+                                <div class="indicator left"></div>
+                                <div class="indicator right"></div>
+                                <div class="button-switch"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <!-- New Animated Action Button -->
+            <button id="start-btn" onclick="startAttack()"
+                class="group relative w-full py-4 rounded-xl overflow-hidden bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 transition-all duration-150 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:-translate-y-1">
+
+                <!-- Animated Background Scan -->
+                <div
+                    class="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.3)_50%,transparent_75%)] bg-[length:250%_250%] animate-[shimmer_2s_infinite]">
+                </div>
+
+                <!-- Glitch Layers (Hidden by default, shown on hover/active) -->
+                <div
+                    class="absolute inset-0 opacity-0 group-hover:opacity-100 mix-blend-overlay transition-opacity duration-100">
+                    <div class="absolute top-0 left-0 w-full h-full bg-cyan-400/20 translate-x-[2px] animate-pulse">
+                    </div>
+                    <div
+                        class="absolute top-0 left-0 w-full h-full bg-red-400/20 -translate-x-[2px] animate-pulse delay-75">
+                    </div>
+                </div>
+
+                <div class="relative z-10 flex items-center justify-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white animate-[spin_3s_linear_infinite]"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span
+                        class="font-cyber font-bold text-white tracking-[0.2em] text-lg group-hover:text-cyan-50 transition-colors">INITIATE
+                        ATTACK</span>
+                </div>
+
+                <!-- Tech Corners -->
+                <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white/50"></div>
+                <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white/50"></div>
+                <div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white/50"></div>
+                <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white/50"></div>
+            </button>
+
+            <!-- New Animated Stop Button -->
+            <button id="stop-btn" onclick="stopAttack()"
+                class="hidden group relative w-full py-4 rounded-xl overflow-hidden bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 transition-all duration-150 shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)] hover:-translate-y-1">
+
+                <!-- Animated Background Scan (Reverse) -->
+                <div
+                    class="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.3)_50%,transparent_75%)] bg-[length:250%_250%] animate-[shimmer_2s_infinite_reverse]">
+                </div>
+
+                <div class="relative z-10 flex items-center justify-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white animate-pulse" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="font-cyber font-bold text-white tracking-[0.2em] text-lg">TERMINATE SESSION</span>
+                </div>
+
+                <!-- Tech Corners -->
+                <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white/50"></div>
+                <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white/50"></div>
+                <div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white/50"></div>
+                <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white/50"></div>
+            </button>
+
+            <!-- Server Info (Small) -->
+            <div class="glass-panel rounded-xl p-4 flex flex-col gap-3">
+                <div class="flex justify-between items-center text-xs text-slate-400 font-mono">
+                    <span>PHP SERVER</span>
+                    <span id="php-status" class="text-green-500">READY</span>
+                </div>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div id="php-bar" class="h-full bg-green-500 w-0 transition-all duration-500"></div>
+                </div>
+            </div>
+
+            <!-- View Data Button Removed -->
+        </div>
+
+        <!-- Right Panel: Data Stream -->
+        <div class="flex-1 flex flex-col gap-6 overflow-hidden slide-in-right">
+
+            <!-- Connection Cards -->
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Localhost Card -->
+                <div
+                    class="glass-panel p-5 rounded-2xl border-l-4 border-l-emerald-500 flex flex-col gap-2 relative overflow-hidden group">
+
+                    <h3 class="text-xs font-bold text-emerald-400 tracking-widest uppercase mb-1">Local Network</h3>
+                    <div class="flex items-center gap-3 w-full">
+                        <input type="text" id="local-url" readonly value="Offline"
+                            class="flex-1 bg-black/20 border border-slate-700/50 rounded px-3 py-1.5 text-sm font-mono text-slate-300 focus:outline-none focus:border-cyan-500/50 transition-colors">
+                        <button onclick="copyToClipboard('local-url')"
+                            class="p-1.5 rounded-md hover:bg-white/10 text-slate-400 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cloudflare Card -->
+                <div
+                    class="glass-panel p-5 rounded-2xl border-l-4 border-l-orange-500 flex flex-col gap-2 relative overflow-hidden group">
+
+                    <h3 class="text-xs font-bold text-orange-400 tracking-widest uppercase mb-1">Cloudflared Tunnel</h3>
+                    <div class="flex items-center gap-3 w-full">
+                        <input type="text" id="cld-url" readonly value="Disabled"
+                            class="flex-1 bg-black/20 border border-slate-700/50 rounded px-3 py-1.5 text-sm font-mono text-slate-300 focus:outline-none focus:border-orange-500/50 transition-colors">
+                        <button onclick="copyToClipboard('cld-url')"
+                            class="p-1.5 rounded-md hover:bg-white/10 text-slate-400 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal/Logs -->
+            <div
+                class="glass-panel rounded-2xl flex-1 flex flex-col overflow-hidden relative border-t-2 border-t-cyan-500/50">
+                <div class="bg-black/40 p-3 flex justify-between items-center border-b border-white/5">
+                    <div class="flex items-center gap-2">
+                        <div class="flex gap-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+                        </div>
+                        <span class="text-xs font-mono text-cyan-400 ml-3">live_capture_stream.log</span>
+                    </div>
+                </div>
+
+                <div id="log-container"
+                    class="flex-1 overflow-y-auto p-4 font-mono text-sm space-y-1 text-slate-400 select-text">
+                    <div class="text-emerald-500/80">root@zphisher:~# System initialized...</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Developer Footer -->
+    <footer class="relative z-10 w-full py-3 text-center border-t border-white/5 bg-black/80 backdrop-blur-sm">
+        <p class="text-xs font-cyber tracking-[0.3em] text-slate-500 uppercase">
+            Developed by <a href="https://github.com/Roshanshrestha1" target="_blank"
+                class="text-cyan-400 font-bold glow-text-blue hover:text-cyan-300 transition-colors">Roshan Shrestha</a>
+        </p>
+    </footer>
+
+
+    <!-- Settings Modal -->
+    <div id="settings-modal"
+        class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-96 rounded-2xl p-6 transform scale-95 transition-transform duration-300"
+            id="settings-content">
+            <h2 class="text-xl font-cyber font-bold text-white mb-6 border-b border-white/10 pb-2">Configuration</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Listen
+                        Port</label>
+                    <input type="number" id="settings-port" value="8080"
+                        class="w-full bg-black/40 border border-slate-700 rounded p-2.5 text-white font-mono focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-colors">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mask URL (Visual
+                        only)</label>
+                    <input type="text" placeholder="https://..."
+                        class="w-full bg-black/40 border border-slate-700 rounded p-2.5 text-slate-500 font-mono focus:outline-none cursor-not-allowed"
+                        disabled title="Coming soon">
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end gap-3">
+                <button onclick="toggleSettings()"
+                    class="px-4 py-2 text-sm text-slate-400 hover:text-white transition-colors">Cancel</button>
+                <button onclick="saveSettings()"
+                    class="px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 rounded text-white font-bold text-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">Save
+                    Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Management Modal -->
+    <div id="data-modal"
+        class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-[600px] max-h-[80vh] flex flex-col rounded-2xl p-6 transform scale-95 transition-transform duration-300"
+            id="data-content">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <h2 class="text-xl font-cyber font-bold text-white flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    CAPTURED INFORMATION
+                </h2>
+                <button onclick="toggleDataModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-hidden flex flex-col gap-4">
+                <div class="flex gap-2 border-b border-slate-700/50 pb-2">
+                    <button onclick="switchTab('creds')" id="tab-creds"
+                        class="px-4 py-2 text-sm font-bold border-b-2 border-cyan-500 text-cyan-400 transition-colors">CREDENTIALS</button>
+                    <button onclick="switchTab('ips')" id="tab-ips"
+                        class="px-4 py-2 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-300 transition-colors">IP
+                        ADDRESSES</button>
+                </div>
+
+                <div id="view-creds"
+                    class="flex-1 overflow-y-auto bg-black/40 rounded border border-slate-700/50 p-4 font-mono text-xs text-green-400 whitespace-pre-wrap select-text">
+                    No credentials captured yet...</div>
+                <div id="view-ips"
+                    class="hidden flex-1 overflow-y-auto bg-black/40 rounded border border-slate-700/50 p-4 font-mono text-xs text-yellow-400 whitespace-pre-wrap select-text">
+                    No IP logs yet...</div>
+            </div>
+
+            <div class="mt-6 flex justify-between items-center pt-4 border-t border-white/10">
+                <button onclick="deleteData()"
+                    class="px-4 py-2 rounded bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-colors text-sm font-bold flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    DELETE LOGS
+                </button>
+                <button onclick="saveTxt()"
+                    class="px-6 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 rounded text-white font-bold text-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    SAVE .TXT
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin + '/api';
+        let config = { port: 8080 };
+        let siteData = {};
+        let pinger;
+        let currentCreds = "";
+        let currentIps = "";
+
+        // UI Helpers
+        function toggleSettings() {
+            const modal = document.getElementById('settings-modal');
+            const content = document.getElementById('settings-content');
+            toggleModalAnim(modal, content);
+        }
+
+        function openDataModal() {
+            const modal = document.getElementById('data-modal');
+            const content = document.getElementById('data-content');
+            // Refresh content
+            document.getElementById('view-creds').innerText = currentCreds || "No credentials captured yet...";
+            document.getElementById('view-ips').innerText = currentIps || "No IP logs yet...";
+            toggleModalAnim(modal, content);
+        }
+
+        function toggleDataModal() {
+            const modal = document.getElementById('data-modal');
+            const content = document.getElementById('data-content');
+            toggleModalAnim(modal, content);
+        }
+
+        function toggleModalAnim(modal, content) {
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                void modal.offsetWidth;
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            } else {
+                modal.classList.add('opacity-0');
+                content.classList.remove('scale-100');
+                content.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function switchTab(tab) {
+            const credsTab = document.getElementById('tab-creds');
+            const ipsTab = document.getElementById('tab-ips');
+            const credsView = document.getElementById('view-creds');
+            const ipsView = document.getElementById('view-ips');
+
+            if (tab === 'creds') {
+                credsTab.classList.add('border-cyan-500', 'text-cyan-400');
+                credsTab.classList.remove('border-transparent', 'text-slate-500');
+                ipsTab.classList.remove('border-cyan-500', 'text-cyan-400');
+                ipsTab.classList.add('border-transparent', 'text-slate-500');
+                credsView.classList.remove('hidden');
+                ipsView.classList.add('hidden');
+            } else {
+                ipsTab.classList.add('border-cyan-500', 'text-cyan-400');
+                ipsTab.classList.remove('border-transparent', 'text-slate-500');
+                credsTab.classList.remove('border-cyan-500', 'text-cyan-400');
+                credsTab.classList.add('border-transparent', 'text-slate-500');
+                ipsView.classList.remove('hidden');
+                credsView.classList.add('hidden');
+            }
+        }
+
+        function saveTxt() {
+            const content = `--- CREDENTIALS ---\n${currentCreds}\n\n--- IP LOGS ---\n${currentIps}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `zphisher_capture_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            logFunc('Data saved to file', 'success');
+        }
+
+        async function deleteData() {
+            if (!confirm("Are you sure you want to delete all captured logs? This cannot be undone.")) return;
+            try {
+                await fetch(`${API_BASE}/logs/delete`, { method: 'POST' });
+                currentCreds = "";
+                currentIps = "";
+                document.getElementById('view-creds').innerText = "No credentials captured yet...";
+                document.getElementById('view-ips').innerText = "No IP logs yet...";
+                document.getElementById('log-container').innerHTML = ''; // Clear live feed too
+                logFunc('All logs deleted', 'warn');
+                toggleDataModal();
+            } catch (e) {
+                logFunc('Failed to delete logs', 'error');
+            }
+        }
+
+        function saveSettings() {
+            const port = document.getElementById('settings-port').value;
+            if (port < 1024 || port > 65535) return alert('Invalid Port (1024-65535)');
+            config.port = parseInt(port);
+            logFunc(`Configuration updated: Port ${config.port}`);
+            toggleSettings();
+        }
+
+        function logFunc(msg, type = 'info') {
+            const container = document.getElementById('log-container');
+            const div = document.createElement('div');
+
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+            let prefix = 'Info';
+            let color = 'text-slate-400';
+
+            if (type === 'success') { prefix = 'OK'; color = 'text-emerald-400'; }
+            if (type === 'error') { prefix = 'ERR'; color = 'text-red-400'; }
+            if (type === 'warn') { prefix = 'WARN'; color = 'text-orange-400'; }
+            if (type === 'sys') { prefix = 'SYS'; color = 'text-cyan-400'; }
+
+            div.innerHTML = `<span class="text-slate-600">[${time}]</span> <span class="${color} font-bold">${prefix}</span>: ${msg}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function fetchSites() {
+            try {
+                const res = await fetch(`${API_BASE}/sites`);
+                const data = await res.json();
+                siteData = data.sites;
+
+                const select = document.getElementById('service-select');
+                Object.keys(siteData).forEach(service => {
+                    const opt = document.createElement('option');
+                    opt.value = service;
+                    opt.innerText = service.toUpperCase();
+                    select.appendChild(opt);
+                });
+            } catch (e) {
+                logFunc('Failed to load services', 'error');
+            }
+        }
+
+        function updateTemplates() {
+            const service = document.getElementById('service-select').value;
+            const container = document.getElementById('template-container');
+            const select = document.getElementById('template-select');
+
+            select.innerHTML = '';
+
+            if (!service) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            const templates = siteData[service];
+
+            if (typeof templates === 'string') {
+                // Simple case (1-to-1)
+                container.classList.add('hidden');
+            } else {
+                // Nested options
+                container.classList.remove('hidden');
+                Object.keys(templates).forEach(name => {
+                    const opt = document.createElement('option');
+                    opt.value = templates[name]; // The actual folder name
+                    opt.innerText = name.toUpperCase();
+                    select.appendChild(opt);
+                });
+            }
+        }
+
+        async function startAttack() {
+            const service = document.getElementById('service-select').value;
+            if (!service) return alert("Select a service");
+
+            let targetFolder = "";
+            const templates = siteData[service];
+
+            if (typeof templates === 'string') {
+                targetFolder = templates;
+            } else {
+                targetFolder = document.getElementById('template-select').value;
+            }
+
+            const useCld = document.getElementById('use-cloudflared').checked;
+
+            logFunc(`Ready to launch ${service} (${targetFolder}) on port ${config.port}...`, 'sys');
+
+            const btn = document.getElementById('start-btn');
+            // btn.innerHTML = ... spinner ... (simplified for now)
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
+
+            try {
+                const res = await fetch(`${API_BASE}/start`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        site: targetFolder,
+                        use_cloudflared: useCld,
+                        port: config.port
+                    })
+                });
+                const data = await res.json();
+
+                if (data.status === 'started') {
+                    setRunning(true);
+                    logFunc(`Serve started (PID: ${data.pid})`, 'success');
+                    document.getElementById('local-url').value = data.url;
+
+                    if (useCld) {
+                        document.getElementById('cld-url').value = "Negotiating...";
+                        logFunc('Initializing Cloudflared tunnel...', 'warn');
+                    } else {
+                        document.getElementById('cld-url').value = "Disabled";
+                    }
+                    startPolling();
+                } else {
+                    logFunc('Start failed: ' + JSON.stringify(data), 'error');
+                }
+            } catch (e) {
+                logFunc('Connection error', 'error');
+            } finally {
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'all';
+            }
+        }
+
+        async function stopAttack() {
+            await fetch(`${API_BASE}/stop`, { method: 'POST' });
+            setRunning(false);
+            logFunc('Session terminated', 'sys');
+            document.getElementById('cld-url').value = "Disabled";
+            document.getElementById('local-url').value = "Offline";
+            clearInterval(pinger);
+        }
+
+        function setRunning(active) {
+            const startBtn = document.getElementById('start-btn');
+            const stopBtn = document.getElementById('stop-btn');
+            const dot = document.getElementById('status-dot');
+            const text = document.getElementById('status-text');
+            const phpBar = document.getElementById('php-bar');
+
+            if (active) {
+                startBtn.classList.add('hidden');
+                stopBtn.classList.remove('hidden');
+                dot.classList.remove('bg-red-500');
+                dot.classList.add('bg-green-500', 'animate-pulse');
+                text.innerText = "ONLINE";
+                text.classList.add('text-green-400');
+                text.classList.remove('text-slate-300');
+                phpBar.classList.replace('w-0', 'w-full');
+            } else {
+                stopBtn.classList.add('hidden');
+                startBtn.classList.remove('hidden');
+                dot.classList.add('bg-red-500');
+                dot.classList.remove('bg-green-500', 'animate-pulse');
+                text.innerText = "IDLE";
+                text.classList.remove('text-green-400');
+                text.classList.add('text-slate-300');
+                phpBar.classList.replace('w-full', 'w-0');
+            }
+        }
+
+        async function startPolling() {
+            if (pinger) clearInterval(pinger);
+            pinger = setInterval(async () => {
+                const res = await fetch(`${API_BASE}/logs`);
+                const data = await res.json();
+
+                // Cloudflared URL Check
+                if (data.cloudflared_url) {
+                    const el = document.getElementById('cld-url');
+                    if (el.value !== data.cloudflared_url) {
+                        el.value = data.cloudflared_url;
+                        logFunc(`Tunnel established: ${data.cloudflared_url}`, 'success');
+                    }
+                }
+
+                // Logs (Simple check)
+                if (data.credentials) {
+                    currentCreds = data.credentials; // Update global state
+                    // Update Count
+                    const credCount = data.credentials.trim() ? data.credentials.trim().split('\n').filter(line => line.trim() !== '').length : 0;
+                    document.getElementById('creds-count').innerText = credCount;
+
+                    if (!window.lastCreds) {
+                        window.lastCreds = data.credentials;
+                        logFunc("CREDENTIALS CAPTURED!", 'success');
+                        updateLastCaptureTime();
+                        data.credentials.split('\n').forEach(line => {
+                            if (line) logFunc(`> ${line}`, 'warn');
+                        });
+                    } else if (data.credentials.length > window.lastCreds.length) {
+                        // very naive diff
+                        const newContent = data.credentials.substring(window.lastCreds.length);
+                        window.lastCreds = data.credentials;
+                        logFunc("NEW CREDENTIALS!", 'success');
+                        updateLastCaptureTime();
+                        newContent.split('\n').forEach(line => {
+                            if (line) logFunc(`> ${line}`, 'warn');
+                        });
+                    }
+                } else {
+                    document.getElementById('creds-count').innerText = "0";
+                }
+
+                if (data.ips) {
+                    currentIps = data.ips; // Update global state
+                    // Update Count
+                    const ipCount = data.ips.trim() ? data.ips.trim().split('\n').filter(line => line.trim() !== '').length : 0;
+                    document.getElementById('victims-count').innerText = ipCount;
+
+                    if (!window.lastIps) {
+                        window.lastIps = data.ips;
+                        logFunc("VICTIM CONNECTED", 'warn');
+                    } else if (data.ips.length > window.lastIps.length) {
+                        window.lastIps = data.ips;
+                        logFunc("NEW VICTIM CONNECTED", 'warn');
+                        updateLastCaptureTime();
+                    }
+                } else {
+                    document.getElementById('victims-count').innerText = "0";
+                }
+
+            }, 2000);
+        }
+
+
+
+        async function copyToClipboard(id) {
+            const el = document.getElementById(id);
+            const text = el.value; // Now retrieving value from input
+
+            if (text === 'Disabled' || text === 'Negotiating...' || text === 'Offline') {
+                logFunc('Nothing to copy', 'warn');
+                return;
+            }
+
+            // Direct Selection + Copy (Highest reliability for inputs)
+            try {
+                el.select();
+                el.setSelectionRange(0, 99999); // Mobile compatibility
+                const success = document.execCommand('copy');
+                if (success) {
+                    successVisuals(el);
+                    return;
+                }
+            } catch (e) {
+                console.log("Exec command failed, trying API");
+            }
+
+            // Fallback to Clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    successVisuals(el);
+                    return;
+                } catch (err) {
+                    console.error('Clipboard API failed', err);
+                }
+            }
+
+            // Ultimate Fallback
+            window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+            logFunc('Manual copy required', 'warn');
+        }
+
+        function successVisuals(el) {
+            logFunc('URL copied to clipboard!', 'success');
+            // Since it's an input now, we don't change text color directly like <code>
+            el.style.borderColor = "#4ade80"; // green-400
+            setTimeout(() => {
+                el.style.borderColor = ""; // Reset
+            }, 500);
+        }
+
+        function updateLastCaptureTime() {
+            // Feature disabled
+        }
+
+        function updateCldStatus() {
+            const chk = document.getElementById('use-cloudflared');
+            const status = document.getElementById('cld-url');
+            // Only update if currently "Disabled" or "Enabled" (don't overwrite actual URLs or "Negotiating...")
+            // Or simpler: if system is IDLE. 
+            // We can check if status-text is IDLE.
+            const sysStatus = document.getElementById('status-text').innerText;
+
+            if (sysStatus === "IDLE" || sysStatus === "SYSTEM IDLE") {
+                if (chk.checked) {
+                    status.value = "Enabled";
+                    status.classList.add('text-orange-400');
+                    status.classList.remove('text-slate-300');
+                } else {
+                    status.value = "Disabled";
+                    status.classList.remove('text-orange-400');
+                    status.classList.add('text-slate-300');
+                }
+            }
+        }
+
+        // INIT
+        fetchSites();
+    </script>
+</body>
+
+</html>
