@@ -69,8 +69,9 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 
 - Now go to cloned directory and run `zphisher.sh` -
   ```
-  $ cd zphisher
-  $ bash zphisher.sh
+  cd ZphisherPro
+   bash zphisher.sh
+    bash zphisher.sh
   ```
 
 
@@ -216,6 +217,7 @@ $ zphisher
 <table>
 
 <!-- // -->
+
 
 
 
